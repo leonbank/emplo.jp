@@ -1,0 +1,9 @@
+{
+  LIST=($(find www.emplo.jp -type f | sort | grep '\?'))
+  for i in ${LIST[@]}
+  do
+    name="$(echo $i | sed -e 's/\?.*$//')"
+    echo $name
+    mv $i $name
+  done
+}
