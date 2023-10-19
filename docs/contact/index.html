@@ -539,6 +539,7 @@ color: #ffffff;
 <link rel="icon" href="/wp-content/uploads/2023/02/cropped-E_logo-192x192.png" sizes="192x192" />
 <link rel="apple-touch-icon" href="/wp-content/uploads/2023/02/cropped-E_logo-180x180.png" />
 <meta name="msapplication-TileImage" content="/wp-content/uploads/2023/02/cropped-E_logo-270x270.png" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.37/vue.global.prod.min.js"></script>
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XY9RW9DC6"></script>
@@ -601,77 +602,99 @@ color: #ffffff;
 
     <div class="post_content clearfix">
    <div id="mw_wp_form_mw-wp-form-288" class="mw_wp_form mw_wp_form_input  ">
-					<form method="post" action="" enctype="multipart/form-data"><table class="cform">
+					<form v-if="stepView === 1" @submit.prevent="onSubmit">
+            <table class="cform">
 <tbody>
 <tr>
 <th>お問い合わせの種類<br />
 <span class="required-srt">必須</span></th>
 <td style="vertical-align: middle;">	<span class="mwform-radio-field horizontal-item">
 		<label >
-			<input type="radio" name="種類" value="企業様" />
+			<input type="radio" name="種類" v-model="kind" value="企業様" />
 			<span class="mwform-radio-field-text">企業様</span>
 		</label>
 	</span>
 	<span class="mwform-radio-field horizontal-item">
 		<label >
-			<input type="radio" name="種類" value="派遣希望の方" />
+			<input type="radio" name="種類" v-model="kind" value="派遣希望の方" />
 			<span class="mwform-radio-field-text">派遣希望の方</span>
 		</label>
 	</span>
 	<span class="mwform-radio-field horizontal-item">
 		<label >
-			<input type="radio" name="種類" value="その他" />
+			<input type="radio" name="種類" v-model="kind" value="その他" />
 			<span class="mwform-radio-field-text">その他</span>
 		</label>
 	</span>
 
 <input type="hidden" name="__children[種類][]" value="{&quot;\u4f01\u696d\u69d8&quot;:&quot;\u4f01\u696d\u69d8&quot;,&quot;\u6d3e\u9063\u5e0c\u671b\u306e\u65b9&quot;:&quot;\u6d3e\u9063\u5e0c\u671b\u306e\u65b9&quot;,&quot;\u305d\u306e\u4ed6&quot;:&quot;\u305d\u306e\u4ed6&quot;}" />
-</td>
-</tr>
-<tr>
+</td></tr><tr>
 <th>お名前 <span class="required-srt">必須</span></th>
-<td>
-<input type="text" name="お名前" size="60" value="" placeholder="例）山田 太郎" />
-</td>
-</tr>
-<tr>
+<td><input type="text" name="お名前" size="60" v-model="username" placeholder="例）山田 太郎" /></td>
+</tr><tr>
 <th>メールアドレス <span class="required-srt">必須</span></th>
-<td>
-<input type="email" name="メールアドレス" size="60" value="" placeholder="例）xxxxxxx_yyy@xxxxx.ne.jp" data-conv-half-alphanumeric="true"/>
-</td>
-</tr>
-<tr>
+<td><input type="email" name="メールアドレス" size="60" v-model="email" placeholder="例）xxxxxxx_yyy@xxxxx.ne.jp" data-conv-half-alphanumeric="true"/></td>
+</tr><tr>
 <th>会社名</th>
-<td>
-<input type="text" name="会社名" size="60" value="" placeholder="例）株式会社ＸＸＸ" />
-</td>
-</tr>
-<tr>
+<td><input type="text" name="会社名" size="60" v-model="company" placeholder="例）株式会社ＸＸＸ" /></td>
+</tr><tr>
 <th>電話番号</th>
-<td>
-<input type="text" name="電話" size="60" value="" placeholder="例）080-1234-5678" />
-</td>
-</tr>
-<tr>
+<td><input type="text" name="電話" size="60" v-model="phone" placeholder="例）080-1234-5678" /></td>
+</tr><tr>
 <th>お問い合わせ本文<br />
 <span class="required-srt">必須</span></th>
-<td>
-<textarea name="要望欄" cols="80" rows="6" placeholder="お問い合わせ内容をご記入ください"></textarea>
-</td>
+<td><textarea name="要望欄" v-model="text" cols="80" rows="6" placeholder="お問い合わせ内容をご記入ください"></textarea></td>
 </tr>
 </tbody>
 </table>
-<div></div>
+<div style="color:#d33">{{ message }}</div>
 <div class="submit-btn">
 <input type="submit" name="submitConfirm" value="確認画面へ進む" />
 </div>
 <div class="submit-btn-back">
 <p style="text-align: center;"></p>
 </div>
-<input type="hidden" name="mw-wp-form-form-id" value="288" /><input type="hidden" name="mw_wp_form_token" value="1284c6da990a2355ff58bb9a84fbdf1867131aa8b7e883ea5bfaf4d0695f9377" /></form>
-				<!-- end .mw_wp_form --></div>
+<input type="hidden" name="mw-wp-form-form-id" value="288" /><input type="hidden" name="mw_wp_form_token" value="1284c6da990a2355ff58bb9a84fbdf1867131aa8b7e883ea5bfaf4d0695f9377" />
+</form>
+
+<form v-if="stepView === 2" @submit.prevent="onSubmit">
+  <table class="cform">
+  <tbody>
+  <tr>
+  <th>お問い合わせの種類<br>
+  <span class="required-srt">必須</span></th>
+  <td style="vertical-align: middle;">{{ kind }}</td></tr><tr>
+  <th>お名前 <span class="required-srt">必須</span></th>
+  <td>{{ username }}</td></tr><tr>
+  <th>メールアドレス <span class="required-srt">必須</span></th>
+  <td>{{ email }}</td></tr><tr>
+  <th>会社名</th>
+  <td>{{ company }}</td></tr><tr>
+  <th>電話番号</th>
+  <td>{{ phone }}</td></tr><tr>
+  <th>お問い合わせ本文<br>
+  <span class="required-srt">必須</span></th>
+  <td>{{ text }}</td></tr>
+  </tbody>
+  </table>
+  <div>{{ message }}</div>
+  <div class="submit-btn">
+  <input type="submit" name="確認送信" value="送信する">
+  </div>
+  <div class="submit-btn-back">
+  <p style="text-align: center;">
+  <input @click.prevent="onCancel" type="button" name="submitBack" value="戻る">
+  </p>
+  </div>
+  <input type="hidden" name="mw-wp-form-form-id" value="288"><input type="hidden" name="mw_wp_form_token" value="4a21388d85fcbf396bf01ed936419e1de6dfde0acd5294d5b4df2920bd8ef084">
+</form>
+
+<p v-if="stepView === 3">お問い合わせが送信されました。</p>
+
+    </div>
   </div>
 
+  <div v-if="loading" class="loading"></div>
   
   </article><!-- END #article -->
 
@@ -826,15 +849,22 @@ jQuery(document).ready(function($){
     mqls[i].addListener(mediaqueryresponse)
   }
 
-
-  
-  
 });
 </script>
-
-
 <script type='text/javascript' src='/wp-content/plugins/mw-wp-form/js/form.js?ver=6.3.2' id='mw-wp-form-js'></script>
 <script type='text/javascript' src='/wp-includes/js/comment-reply.min.js?ver=6.3.2' id='comment-reply-js'></script>
 <script src="/wp-content/themes/fake_tcd074/js/parallax.js?ver=2.0.1"></script>
+<script src="/js/contact.js"></script>
+<style>
+  .loading {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 100000;
+  }
+</style>
 </body>
 </html>

@@ -40,7 +40,7 @@ jQuery( function( $ ) {
 		if ( mw_wp_form_button_no_click ) {
 			mw_wp_form_button_no_click = false;
 		} else {
-			$( this ).prop( 'disabled', true );
+			// $( this ).prop( 'disabled', true );
 		}
 	} );
 } );
