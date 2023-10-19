@@ -674,7 +674,7 @@ color: #ffffff;
   <td>{{ phone }}</td></tr><tr>
   <th>お問い合わせ本文<br>
   <span class="required-srt">必須</span></th>
-  <td>{{ text }}</td></tr>
+  <td v-html="text.split('\n').join('<br>')"></td></tr>
   </tbody>
   </table>
   <div>{{ message }}</div>
