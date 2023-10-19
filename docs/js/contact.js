@@ -2,14 +2,14 @@ Vue.createApp({
   data() {
     return {
       loading: true,
-      kind: '',
-      username: 'A',
-      email: 'a@a',
-      company: '',
-      phone: '',
-      text: 'AA',
       stepView: 1,
       message: '',
+      kind: '',
+      username: '',
+      email: '',
+      company: '',
+      phone: '',
+      text: '',
     };
   },
 
@@ -25,7 +25,7 @@ Vue.createApp({
         this.message = '必須項目を入力してください。';
         return;
       }
-      if (!this.preview) {
+      if (this.stepView === 1) {
         this.stepView++;
         return;
       }
