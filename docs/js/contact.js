@@ -46,7 +46,7 @@ Vue.createApp({
         [text]: this.text,
       });
       this.loading = true;
-      fetch('https://ah1t85s636.execute-api.ap-northeast-1.amazonaws.com/v1/sendMail', {
+      fetch('https://emplo.jp/api/v1/sendMail', {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body,
